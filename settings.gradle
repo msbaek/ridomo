@@ -1,0 +1,4 @@
+rootProject.name = 'ridomo'
+
+include 'ridomo-usecase'
+include 'ridomo-usecase-spring-webmvc'

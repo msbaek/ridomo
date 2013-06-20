@@ -1,0 +1,19 @@
+description = "Uncle Bob's Clean Code Cast Episode 7 Architecture, Use Cases, and High Level Design with Spring MVC"
+
+dependencies {
+	testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+	testCompile group: 'org.javassist', name: 'javassist', version: javassistVersion
+	testCompile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
+	testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: jsonPathVersion
+	['jackson-core', 'jackson-annotations', 'jackson-databind'].collect {
+		testCompile group: 'com.fasterxml.jackson.core', name: it, version: jacksonVersion
+	}
+
+	provided group: 'javax.servlet', name: 'javax.servlet-api', version: servletApiVersion
+	provided group: 'javax.servlet.jsp', name: 'jsp-api', version: jspApiVersion
+
+	compile project(':ridomo-usecase')
+	['spring-web', 'spring-webmvc'].collect {
+		compile group: 'org.springframework', name: it, version: springVersion
+	}
+}

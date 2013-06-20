@@ -1,0 +1,11 @@
+description = "Uncle Bob's Clean Code Cast Episode 7 Architecture, Use Cases, and High Level Design"
+
+dependencies {
+	testCompile group: 'org.hibernate', name: 'hibernate-validator', version: hibernateValidatorVersion
+
+	compile group: 'com.google.guava', name: 'guava', version: guavaVersion
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: commonsLang3Version
+	compile group: 'commons-collections', name: 'commons-collections', version: commonsCollectionsVersion
+
+	compile group: 'javax.validation', name: 'validation-api', version: validationApiVersion
+}

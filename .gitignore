@@ -1,0 +1,21 @@
+# Ignore maven build directory
+target
+
+# Ignore gradle build directory
+build
+.gradle
+classes
+
+# Ignore Eclipse Configuration
+.settings
+.project
+.classpath
+
+# Ignore IntelliJ Configuration
+*.iml
+.idea
+out
+atlassian-ide-plugin.xml
+
+# Ignore subversion
+.svn

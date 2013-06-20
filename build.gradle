@@ -1,0 +1,60 @@
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'maven'
+	apply plugin: 'idea'
+	apply plugin: 'eclipse'
+	group = 'com.github.ridomo'
+	description = 'Rich Domain Model Support Library'
+
+	sourceCompatibility = javaVersion
+	targetCompatibility = javaVersion
+
+	[compileJava, compileTestJava]*.options*.compilerArgs = [xlint]
+
+	configurations {
+		provided
+	}
+
+	sourceSets {
+		main {
+			compileClasspath += configurations.provided
+		}
+		test {
+			compileClasspath += configurations.provided
+			runtimeClasspath += configurations.provided
+		}
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	task sourcesJar(type: Jar, dependsOn: classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
+
+	artifacts {
+		archives sourcesJar
+	}
+}
+
+subprojects {
+	configurations {
+		all*.exclude group: 'commons-logging', module: 'commons-logging'
+	}
+
+	dependencies {
+		testCompile group: 'junit', name: 'junit', version: junitVersion
+		testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
+		testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+
+		['slf4j-api', 'log4j-over-slf4j', 'jcl-over-slf4j', 'jul-to-slf4j'].collect {
+			compile group: 'org.slf4j', name: it, version: slf4jVersion
+		}
+		['logback-core', 'logback-classic'].collect {
+			compile group: 'ch.qos.logback', name: it, version: logbackVersion
+		}
+	}
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://www.springframework.org/schema/beans" xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<context:annotation-config/>
+	<context:component-scan
+			base-package="com.github.ridomo.usecase.spring.webmvc.support.integration.controller,com.github.ridomo.usecase.spring.webmvc.support.integration.interactor,,com.github.ridomo.usecase.spring.webmvc.support.integration.presenter"/>
+
+	<mvc:annotation-driven>
+		<mvc:return-value-handlers>
+			<bean class="com.github.ridomo.usecase.spring.webmvc.support.processor.InteractorMethodProcessor"
+			      c:messageConverters-ref="messageConverters" c:manager-ref="mvcContentNegotiationManager"/>
+		</mvc:return-value-handlers>
+		<mvc:argument-resolvers>
+			<bean class="com.github.ridomo.usecase.spring.webmvc.support.processor.InteractorMethodProcessor"
+			      c:messageConverters-ref="messageConverters" c:manager-ref="mvcContentNegotiationManager"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<util:list id="messageConverters">
+		<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	</util:list>
+
+	<!-- this bean processor check spring scope beans(interactor, presenter class) -->
+	<bean class="com.github.ridomo.usecase.spring.webmvc.support.processor.BoundaryScopeFactoryPostProcessor"/>
+
+	<!-- composite boundaries -->
+	<bean id="compositeInteractor" class="com.github.ridomo.usecase.support.CompositeInteractor"
+	      c:interactors-ref="interactors" scope="prototype"/>
+	<util:list id="interactors" scope="prototype">
+		<ref bean="deleteInteractor"/>
+		<ref bean="updateInteractor"/>
+	</util:list>
+
+	<bean id="compositePresentableInteractor" class="com.github.ridomo.usecase.support.CompositePresentableInteractor"
+	      c:interactors-ref="presentableInteractors" scope="prototype"/>
+	<util:list id="presentableInteractors" scope="prototype">
+		<ref bean="listingInteractor"/>
+		<ref bean="showInteractor"/>
+	</util:list>
+
+	<bean id="compositeModelPresenter"
+	      class="com.github.ridomo.usecase.spring.webmvc.support.presenter.CompositeModelPresenter"
+	      c:presenters-ref="presenters" scope="request"/>
+	<util:list id="presenters" scope="request">
+		<ref bean="listingModelPresenter"/>
+		<ref bean="showModelPresenter"/>
+	</util:list>
+
+</beans>
