@@ -93,7 +93,7 @@ public class ListingModelPresenter extends AbstractModelPresenter<ResponseModel>
 	}
 }
 
-// spring like @ResponseBody, implements Targetable
+// spring @ResponseBody, implements Targetable
 public class ListingPresenter extends AbstractPresenter<ResponseModel> implements Presenter<ResponseModel>, Targetable<List<Integer>> {
 	@Override
 	protected void execute(ResponseModel response) {
@@ -123,7 +123,7 @@ public void update(Interactor<RequestModel> interactor, @ModelAttribute TestRequ
 	interactor.interact();
 }
 
-// spring like ModelMap(ModelAndView)
+// like spring ModelMap(ModelAndView)
 @Interaction(interactor = "listingInteractor", presenter = "listingModelPresenter")
 @RequestMapping("index")
 public void index(Interactor<RequestModel> interactor, @ModelAttribute TestRequestModel request) {
@@ -131,7 +131,7 @@ public void index(Interactor<RequestModel> interactor, @ModelAttribute TestReque
 	interactor.interact();
 }
 
-// spring like @ResponseBody
+// like spring @ResponseBody
 @Interaction(interactor = "listingInteractor", presenter = "listingPresenter")
 @RequestMapping(value = "list", produces = {MediaType.APPLICATION_JSON_VALUE})
 public Interactor<RequestModel> list(Interactor<RequestModel> interactor, @ModelAttribute TestRequestModel request) {
