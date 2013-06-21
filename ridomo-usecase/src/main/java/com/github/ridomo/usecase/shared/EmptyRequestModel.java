@@ -1,4 +1,4 @@
 package com.github.ridomo.usecase.shared;
 
-public class EmptyRequestModel implements RequestModel {
+final class EmptyRequestModel implements RequestModel {
 }
